@@ -11,22 +11,23 @@
 * Run rails server with 'rails s' (The server will run at http://localhost:3000)
 * Run all tests with 'bundle exec rspec'
 * Run cube's rotation tests with 'rspec spec/models/cube_spec.rb'
-* You can test the endpoints using Postman
 
 # Endpoints
   * /cubes - Gets all cubes (GET)
   * /cubes/:id - Gets cube by ID (GET)
   * /cubes/create - Creates new cube (POST)
   * /cubes/rotate - Rotates cube's one side
+  * You can test the endpoints using Postman
 
 # Create cube explanation
 * Cube is created in initial state
-  * Front side is in red
-  * Back side is in orange
-  * Left side is in green
-  * Right side is in blue
-  * Top side is in white
-  * Bottom side is in yellow
+  * Cube has one field named state(json, has 6 strings that represent 6 sides)
+  * Front("front") side is in red("R")
+  * Back("back") side is in orange("O")
+  * Left("left") side is in green("G")
+  * Right("right") side is in blue("B")
+  * Top("top") side is in white("W")
+  * Bottom("bottom") side is in yellow("Y")
 
 # Cube's rotation functionality
 * Each request rotates one cube's side or middle layer in provided direction
