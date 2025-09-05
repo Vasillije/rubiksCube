@@ -23,356 +23,24 @@ class CubesService
   (["left", "right", "middle-x"].include?(face) && %w[up down].include?(direction))
 
   case face
-  when "top"
-    cube.state["top"] = rotate_matrix(cube.state["top"], direction)
-    front = cube.state["front"]
-    back  = cube.state["back"]
-    left  = cube.state["left"]
-    right = cube.state["right"]
-
-    if direction == "right"
-      temp = front[0].dup
-      front[0] = left[0].dup
-      left[0]  = back[0].dup
-      back[0]  = right[0].dup
-      right[0] = temp
-    elsif direction == "left"
-      temp = front[0].dup
-      front[0] = right[0].dup
-      right[0] = back[0].dup
-      back[0]  = left[0].dup
-      left[0]  = temp
-    end
-
-  when "bottom"
-    cube.state["bottom"] = rotate_matrix(cube.state["bottom"], direction)
-    front = cube.state["front"]
-    back  = cube.state["back"]
-    left  = cube.state["left"]
-    right = cube.state["right"]
-
-    if direction == "right"
-      temp = front[2].dup
-      front[2] = left[2].dup
-      left[2]  = back[2].dup
-      back[2]  = right[2].dup
-      right[2] = temp
-    elsif direction == "left"
-      temp = front[2].dup
-      front[2] = right[2].dup
-      right[2] = back[2].dup
-      back[2]  = left[2].dup
-      left[2]  = temp
-    end
-
-  when "middle-y"
-    front = cube.state["front"]
-    back  = cube.state["back"]
-    left  = cube.state["left"]
-    right = cube.state["right"]
-
-    if direction == "right"
-      temp = front[1].dup
-      front[1] = left[1].dup
-      left[1]  = back[1].dup
-      back[1]  = right[1].dup
-      right[1] = temp
-    elsif direction == "left"
-      temp = front[1].dup
-      front[1] = right[1].dup
-      right[1] = back[1].dup
-      back[1]  = left[1].dup
-      left[1]  = temp
-    end
-
-  when "left"
-    cube.state["left"] = rotate_matrix(cube.state["left"], direction)
-    front = cube.state["front"]
-    back  = cube.state["back"]
-    top   = cube.state["top"]
-    bottom = cube.state["bottom"]
-
-    if direction == "up"
-      temp0 = front[0][0].dup
-      temp1 = front[1][0].dup
-      temp2 = front[2][0].dup
-      front[0][0] = bottom[0][0].dup
-      front[1][0] = bottom[1][0].dup
-      front[2][0] = bottom[2][0].dup
-
-      bottom[0][0] = back[2][2].dup
-      bottom[1][0] = back[1][2].dup
-      bottom[2][0] = back[0][2].dup
-
-      back[0][2] = top[2][0].dup
-      back[1][2] = top[1][0].dup
-      back[2][2] = top[0][0].dup
-
-      top[0][0] = temp0
-      top[1][0] = temp1
-      top[2][0] = temp2
-    elsif direction == "down"
-      temp0 = front[0][0].dup
-      temp1 = front[1][0].dup
-      temp2 = front[2][0].dup
-
-      front[0][0] = top[0][0].dup
-      front[1][0] = top[1][0].dup
-      front[2][0] = top[2][0].dup
-
-      top[0][0] = back[2][2].dup
-      top[1][0] = back[1][2].dup
-      top[2][0] = back[0][2].dup
-
-      back[0][2] = bottom[2][0].dup
-      back[1][2] = bottom[1][0].dup
-      back[2][2] = bottom[0][0].dup
-
-      bottom[0][0] = temp0
-      bottom[1][0] = temp1
-      bottom[2][0] = temp2
-    end
-  when "right"
-    cube.state["right"] = rotate_matrix(cube.state["right"], direction)
-    front = cube.state["front"]
-    back  = cube.state["back"]
-    top   = cube.state["top"]
-    bottom = cube.state["bottom"]
-
-    if direction == "up"
-      temp0 = front[0][2].dup
-      temp1 = front[1][2].dup
-      temp2 = front[2][2].dup
-      front[0][2] = bottom[0][2].dup
-      front[1][2] = bottom[1][2].dup
-      front[2][2] = bottom[2][2].dup
-
-      bottom[0][2] = back[2][0].dup
-      bottom[1][2] = back[1][0].dup
-      bottom[2][2] = back[0][0].dup
-
-      back[0][0] = top[2][2].dup
-      back[1][0] = top[1][2].dup
-      back[2][0] = top[0][2].dup
-
-      top[0][2] = temp0
-      top[1][2] = temp1
-      top[2][2] = temp2
-    elsif direction == "down"
-      temp0 = front[0][2].dup
-      temp1 = front[1][2].dup
-      temp2 = front[2][2].dup
-      front[0][2] = top[0][2].dup
-      front[1][2] = top[1][2].dup
-      front[2][2] = top[2][2].dup
-
-      top[0][2] = back[2][0].dup
-      top[1][2] = back[1][0].dup
-      top[2][2] = back[0][0].dup
-
-      back[0][0] = bottom[2][2].dup
-      back[1][0] = bottom[1][2].dup
-      back[2][0] = bottom[0][2].dup
-
-      bottom[0][2] = temp0
-      bottom[1][2] = temp1
-      bottom[2][2] = temp2
-    end
-
-  when "middle-x"
-    front = cube.state["front"]
-    back  = cube.state["back"]
-    top   = cube.state["top"]
-    bottom = cube.state["bottom"]
-
-    if direction == "up"
-      temp0 = front[0][1].dup
-      temp1 = front[1][1].dup
-      temp2 = front[2][1].dup
-      front[0][1] = bottom[0][1].dup
-      front[1][1] = bottom[1][1].dup
-      front[2][1] = bottom[2][1].dup
-
-      bottom[0][1] = back[0][1].dup
-      bottom[1][1] = back[1][1].dup
-      bottom[2][1] = back[2][1].dup
-
-      back[0][1] = top[0][1].dup
-      back[1][1] = top[1][1].dup
-      back[2][1] = top[2][1].dup
-
-      top[0][1] = temp0
-      top[1][1] = temp1
-      top[2][1] = temp2
-    elsif direction == "down"
-      temp0 = front[0][1].dup
-      temp1 = front[1][1].dup
-      temp2 = front[2][1].dup
-      front[0][1] = top[0][1].dup
-      front[1][1] = top[1][1].dup
-      front[2][1] = top[2][1].dup
-
-      top[0][1] = back[0][1].dup
-      top[1][1] = back[1][1].dup
-      top[2][1] = back[2][1].dup
-
-      back[0][1] = bottom[0][1].dup
-      back[1][1] = bottom[1][1].dup
-      back[2][1] = bottom[2][1].dup
-
-      bottom[0][1] = temp0
-      bottom[1][1] = temp1
-      bottom[2][1] = temp2
-    end
-
-  when "front"
-    cube.state["front"] = rotate_matrix(cube.state["front"], direction)
-    top = cube.state["top"]
-    bottom  = cube.state["bottom"]
-    left   = cube.state["left"]
-    right = cube.state["right"]
-
-    if direction == "left"
-      temp0 = top[2][0].dup
-      temp1 = top[2][1].dup
-      temp2 = top[2][2].dup
-
-      top[2][0] = right[0][0].dup
-      top[2][1] = right[1][0].dup
-      top[2][2] = right[2][0].dup
-
-      right[0][0] = bottom[0][2].dup
-      right[1][0] = bottom[0][1].dup
-      right[2][0] = bottom[0][0].dup
-
-      bottom[0][0] = left[0][2].dup
-      bottom[0][1] = left[1][2].dup
-      bottom[0][2] = left[2][2].dup
-
-      left[0][2] = temp2
-      left[1][2] = temp1
-      left[2][2] = temp0
-    elsif direction == "right"
-      temp0 = top[2][0].dup
-      temp1 = top[2][1].dup
-      temp2 = top[2][2].dup
-
-      top[2][0] = left[2][2].dup
-      top[2][1] = left[1][2].dup
-      top[2][2] = left[0][2].dup
-
-      left[0][2] = bottom[0][0].dup
-      left[1][2] = bottom[0][1].dup
-      left[2][2] = bottom[0][2].dup
-      
-      bottom[0][0] = right[2][0].dup
-      bottom[0][1] = right[1][0].dup
-      bottom[0][2] = right[0][0].dup
-      
-      right[0][0] = temp0
-      right[1][0] = temp1
-      right[2][0] = temp2
-    end
-
-  when "back"
-    cube.state["back"] = rotate_matrix(cube.state["back"], direction)
-    
-    top = cube.state["top"]
-    bottom = cube.state["bottom"]
-    left = cube.state["left"]
-    right = cube.state["right"]
-    
-    if direction == "left"
-      temp0 = top[0][0].dup
-      temp1 = top[0][1].dup
-      temp2 = top[0][2].dup
-
-      top[0][0] = right[0][2].dup
-      top[0][1] = right[1][2].dup
-      top[0][2] = right[2][2].dup
-
-      right[0][2] = bottom[2][2].dup
-      right[1][2] = bottom[2][1].dup
-      right[2][2] = bottom[2][0].dup
-
-      bottom[2][0] = left[0][0].dup
-      bottom[2][1] = left[1][0].dup
-      bottom[2][2] = left[2][0].dup
-
-      left[0][0] = temp2
-      left[1][0] = temp1
-      left[2][0] = temp0
-
-    elsif direction == "right"
-      temp0 = top[0][0].dup
-      temp1 = top[0][1].dup
-      temp2 = top[0][2].dup
-
-      top[0][0] = left[2][0].dup
-      top[0][1] = left[1][0].dup
-      top[0][2] = left[0][0].dup
-
-      left[0][0] = bottom[2][0].dup
-      left[1][0] = bottom[2][1].dup
-      left[2][0] = bottom[2][2].dup
-
-      bottom[2][0] = right[2][2].dup
-      bottom[2][1] = right[1][2].dup
-      bottom[2][2] = right[0][2].dup
-
-      right[0][2] = temp0
-      right[1][2] = temp1
-      right[2][2] = temp2
-      
-    end
-  
+    when "top"
+      rotate_row_based(cube, "top", direction, 0)
+    when "bottom"
+      rotate_row_based(cube, "bottom", direction, 2)
+    when "middle-y"
+      rotate_row_based(cube, "middle-y", direction, 1)
+    when "left"
+      self.rotate_column_based(cube, "left", direction, 0)
+    when "right"
+      self.rotate_column_based(cube, "right", direction, 2)
+    when "middle-x"
+      self.rotate_column_based(cube, "middle-x", direction, 1)
+    when "front"
+      self.rotate_front(cube, direction)
+    when "back"
+      rotate_back(cube, direction)
     when "middle-z"
-      top = cube.state["top"]
-      bottom = cube.state["bottom"]
-      left = cube.state["left"]
-      right = cube.state["right"]
-      if direction == "left"
-        temp0 = top[1][0].dup
-        temp1 = top[1][1].dup
-        temp2 = top[1][2].dup
-
-        top[1][0] = right[0][1].dup
-        top[1][1] = right[1][1].dup
-        top[1][2] = right[2][1].dup
-
-        right[0][1] = bottom[1][2].dup
-        right[1][1] = bottom[1][1].dup
-        right[2][1] = bottom[1][0].dup
-
-        bottom[1][0] = left[0][1].dup
-        bottom[1][1] = left[1][1].dup
-        bottom[1][2] = left[2][1].dup
-
-        left[0][1] = temp2
-        left[1][1] = temp1
-        left[2][1] = temp0
-
-      elsif direction == "right"
-        temp0 = top[1][0].dup
-        temp1 = top[1][1].dup
-        temp2 = top[1][2].dup
-
-        top[1][0] = left[2][1].dup
-        top[1][1] = left[1][1].dup
-        top[1][2] = left[0][1].dup
-
-        left[0][1] = bottom[1][0].dup
-        left[1][1] = bottom[1][1].dup
-        left[2][1] = bottom[1][2].dup
-
-        bottom[1][0] = right[2][1].dup
-        bottom[1][1] = right[1][1].dup
-        bottom[1][2] = right[0][1].dup
-
-        right[0][1] = temp0
-        right[1][1] = temp1
-        right[2][1] = temp2
-      end
+      rotate_middle_z(cube, direction)
   end
 
   cube.save!
@@ -381,21 +49,234 @@ end
 
 
 
+def self.rotate_front(cube, direction)
+  cube.state["front"] = rotate_matrix(cube.state["front"], direction)
+    top    = cube.state["top"]
+    bottom = cube.state["bottom"]
+    left   = cube.state["left"]
+    right  = cube.state["right"]
+
+    if direction == "left"
+      temp0 = top[2][0]
+      temp1 = top[2][1]
+      temp2 = top[2][2]
+
+      top[2][0] = right[0][0]
+      top[2][1] = right[1][0]
+      top[2][2] = right[2][0]
+
+      right[0][0] = bottom[0][2]
+      right[1][0] = bottom[0][1]
+      right[2][0] = bottom[0][0]
+
+      bottom[0][0] = left[0][2]
+      bottom[0][1] = left[1][2]
+      bottom[0][2] = left[2][2]
+
+      left[0][2] = temp2
+      left[1][2] = temp1
+      left[2][2] = temp0
+
+    elsif direction == "right"
+      temp0 = top[2][0]
+      temp1 = top[2][1]
+      temp2 = top[2][2]
+
+      top[2][0] = left[2][2]
+      top[2][1] = left[1][2]
+      top[2][2] = left[0][2]
+
+      left[0][2] = bottom[0][0]
+      left[1][2] = bottom[0][1]
+      left[2][2] = bottom[0][2]
+
+      bottom[0][0] = right[2][0]
+      bottom[0][1] = right[1][0]
+      bottom[0][2] = right[0][0]
+
+      right[0][0] = temp0
+      right[1][0] = temp1
+      right[2][0] = temp2
+    end
+end
+
+def self.rotate_back(cube, direction)
+  cube.state["back"] = rotate_matrix(cube.state["back"], direction)
+
+  reversed_direction = direction == "left" ? "right" : "left"
+    
+    top    = cube.state["top"]
+    bottom = cube.state["bottom"]
+    left   = cube.state["left"]
+    right  = cube.state["right"]
+    
+    if direction == "left"
+      temp0 = top[0][0]
+      temp1 = top[0][1]
+      temp2 = top[0][2]
+
+      top[0][0] = right[0][2]
+      top[0][1] = right[1][2]
+      top[0][2] = right[2][2]
+
+      right[0][2] = bottom[2][2]
+      right[1][2] = bottom[2][1]
+      right[2][2] = bottom[2][0]
+
+      bottom[2][0] = left[0][0]
+      bottom[2][1] = left[1][0]
+      bottom[2][2] = left[2][0]
+
+      left[0][0] = temp2
+      left[1][0] = temp1
+      left[2][0] = temp0
+
+    elsif direction == "right"
+      temp0 = top[0][0]
+      temp1 = top[0][1]
+      temp2 = top[0][2]
+
+      top[0][0] = left[2][0]
+      top[0][1] = left[1][0]
+      top[0][2] = left[0][0]
+
+      left[0][0] = bottom[2][0]
+      left[1][0] = bottom[2][1]
+      left[2][0] = bottom[2][2]
+
+      bottom[2][0] = right[2][2]
+      bottom[2][1] = right[1][2]
+      bottom[2][2] = right[0][2]
+
+      right[0][2] = temp0
+      right[1][2] = temp1
+      right[2][2] = temp2
+    end
+
+end
+
+def self.rotate_middle_z(cube, direction)
+  
+  top = cube.state["top"]
+  bottom = cube.state["bottom"]
+  left = cube.state["left"]
+  right = cube.state["right"]
+
+  if direction == "left"
+    temp0 = top[1][0]
+    temp1 = top[1][1]
+    temp2 = top[1][2]
+
+    top[1][0] = right[0][1]
+    top[1][1] = right[1][1]
+    top[1][2] = right[2][1]
+
+    right[0][1] = bottom[1][2]
+    right[1][1] = bottom[1][1]
+    right[2][1] = bottom[1][0]
+
+    bottom[1][0] = left[0][1]
+    bottom[1][1] = left[1][1]
+    bottom[1][2] = left[2][1]
+
+    left[0][1] = temp2
+    left[1][1] = temp1
+    left[2][1] = temp0
+
+  elsif direction == "right"
+    temp0 = top[1][0]
+    temp1 = top[1][1]
+    temp2 = top[1][2]
+
+    top[1][0] = left[2][1]
+    top[1][1] = left[1][1]
+    top[1][2] = left[0][1]
+
+    left[0][1] = bottom[1][0]
+    left[1][1] = bottom[1][1]
+    left[2][1] = bottom[1][2]
+
+    bottom[1][0] = right[2][1]
+    bottom[1][1] = right[1][1]
+    bottom[1][2] = right[0][1]
+
+    right[0][1] = temp0
+    right[1][1] = temp1
+    right[2][1] = temp2
+  end
+end
+
+  #left right middle-x
+  def self.rotate_column_based(cube, face, direction, column_index)
+    cube.state[face] = rotate_matrix(cube.state[face], direction) unless face.include?("middle")
+
+    reverse_index = if column_index == 2
+      0
+    elsif column_index == 0  
+      2
+    else
+      1
+    end
+
+    front, back, top, bottom = cube.state.values_at("front", "back", "top", "bottom")
+
+    columns = [get_column(front, column_index), get_column(top, column_index), get_column(back, reverse_index).reverse, get_column(bottom, column_index)]
+
+    direction == "down" ? columns.rotate!(1) : columns.rotate!(-1)
+
+    set_column(front, column_index, columns[0])
+    set_column(top, column_index, columns[1])
+    set_column(back, reverse_index, columns[2].reverse)
+    set_column(bottom, column_index, columns[3])
+  end
+
+  #top, bottom
+  def self.rotate_row_based(cube, face, direction, row_index)
+    cube.state[face] = rotate_matrix(cube.state[face], direction) unless face.include?("middle")
+    
+    front, back, left, right = cube.state.values_at("front", "back", "left", "right")
+    
+    rows = [get_row(front, row_index), get_row(left, row_index), get_row(back, row_index), get_row(right, row_index)]
+    
+    direction == "left" ? rows.rotate!(-1) : rows.rotate!(1) #rotira sve redove u krug
+
+    set_row(front, row_index, rows[0])
+    set_row(left, row_index, rows[1])
+    set_row(back, row_index, rows[2])
+    set_row(right, row_index, rows[3])
+  end
+
+  
+  def self.get_row(side, row_index)
+    side[row_index]
+  end
+
+  def self.get_column(side, col_index)
+    side.map { |row| row[col_index] }
+  end
+
+  def self.set_row(side, row_index, values)
+    side[row_index] = values
+  end
+
+  def self.set_column(side, col_index, values)
+    side.each_with_index { |row, i| row[col_index] = values[i] }
+  end
+
   def self.rotate_matrix(matrix, direction)
     case direction
-    when "right", "down"
+    when "left", "down"
     [
       [matrix[2][0], matrix[1][0], matrix[0][0]],
       [matrix[2][1], matrix[1][1], matrix[0][1]],
       [matrix[2][2], matrix[1][2], matrix[0][2]]
     ].map(&:reverse)
-    when "left", "up"
-      [
-        [matrix[0][2], matrix[1][2], matrix[2][2]],
-        [matrix[0][1], matrix[1][1], matrix[2][1]],
-        [matrix[0][0], matrix[1][0], matrix[2][0]]
-      ].map(&:reverse)
-
+    when "right", "up"
+    [
+      [matrix[0][2], matrix[1][2], matrix[2][2]],
+      [matrix[0][1], matrix[1][1], matrix[2][1]],
+      [matrix[0][0], matrix[1][0], matrix[2][0]]
+    ].map(&:reverse)
     else
       raise "rotate_matrix only accepts 'right', 'left', 'up' and 'down'"
     end
